@@ -2,11 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+const cookieParser = require('cookie-parser');
+
+
 dotenv.config({path: './.env'});
+
+const errRouter = require('./routes/404');
+const loginRouter = require('./routes/login');
+const registerRouter = require('./routes/register');
+const homeRouter = require('./routes/home');
 
 const app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cookieParser());
 
 //* Database connection
 mongoose.connect(process.env.DB_URL, {
@@ -19,6 +28,11 @@ mongoose.connect(process.env.DB_URL, {
 app.get('/', (req, res) => {
     res.send('Hello from NodeJS.');
 });
+
+app.use('/', homeRouter);
+app.use('/register', registerRouter);
+app.use('/login', loginRouter);
+app.use('/*', errRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
