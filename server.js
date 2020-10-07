@@ -14,7 +14,7 @@ const homeRouter = require('./routes/home');
 
 const app = express();
 app.use(express.urlencoded({extended: false}));
-app.use(express.json());
+app.use(express.json({extended: false}));
 app.use(cookieParser());
 
 //* Database connection

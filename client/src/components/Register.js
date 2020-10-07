@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import AuthService from '../middlewares/AuthService';
 
-const Register = () => {
+const Register = (props) => {
 
     const [user, setUser] = useState({
         name: "",
@@ -10,28 +11,32 @@ const Register = () => {
         confirmPassword: "",
         role: ""
     });
+    const [message, setMessage] = useState({
+        msgBody: "",
+        msgError: ""
+    });
+
+    let timerID = useRef(null);
+
+    useEffect(()=>{
+        return ()=>{
+            clearTimeout(timerID);
+        }
+    },[]);
 
     const getUserInfo = (event) => {
         console.log("Above event.target.value")
-        console.log(event.target.value);
+        console.log(event.target.name + ' ' + event.target.value);
 
         setUser({
             ...user,
             [event.target.name]: event.target.value
-            
         });
-        console.log(event.target.value);
     };
 
     const sendData = async (event) => {
         event.preventDefault();
         console.log("Form submitted");
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         const body = JSON.stringify({
             userNameForm: user.name,
@@ -41,21 +46,64 @@ const Register = () => {
             userRoleForm: user.role
         });
 
+        // const res = await axios.post('/register', body, config);
+
+        AuthService.register(body).then(async(data) => {
+            console.log(data);
+
+            const { message } = data;
+            setMessage(message);
+            resetForm();
+
+            if(!message.msgError){
+                timerID = setTimeout(()=>{
+                    props.history.push('/login');
+                },2000);
+            }
+        });
+
+
+        // try {
+        //     const res = await axios.post('/register', body, config);
+        //     console.log(res);
+        //     const { message } = res.data;
+        //     setMessage(message);
+        //     resetForm();
+
+        //     if(!message.msgError){
+        //         timerID = setTimeout(()=>{
+        //             props.history.push('/login');
+        //         },2000)
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        //     const { message } = error;
+        //     setMessage(message);
+        // }
         
-        const res = await axios.post('/register', body, config);
-        console.log(res);
+        
+        
     };
 
-    
+    const resetForm = ()=>{
+        setUser({
+            name : "",
+            email: "",
+            password : "",
+            confirmPassword: "",
+            role : ""
+        });
+    }
 
     return (
         <div className="registerDiv">
             <form className='register' onSubmit={sendData}>
                 <h1>SIGN UP</h1>
-                {/* <h2>{{message}}</h2> */}
+                <h2>{message.msgBody}</h2>
                 <label htmlFor="userNameForm">User Name</label>
                 <input 
                     onChange={getUserInfo}
+                    value={user.name}
                     id="userNameForm"
                     name="name"
                     type="text" 
@@ -63,6 +111,7 @@ const Register = () => {
                 <label htmlFor="userEmailForm value={userNameForm}">Email</label>
                 <input 
                     onChange={getUserInfo}
+                    value={user.email}
                     id="userEmailForm"
                     type="email" 
                     name="email"
@@ -70,6 +119,7 @@ const Register = () => {
                 <label htmlFor="userPasswordForm">Password</label>
                 <input 
                     onChange={getUserInfo}
+                    value={user.password}
                     id="userPasswordForm"
                     type="password" 
                     name="password" 
@@ -77,6 +127,7 @@ const Register = () => {
                 <label htmlFor="userConfirmPasswordForm">Confirm Password</label>
                 <input 
                     onChange={getUserInfo}
+                    value={user.confirmPassword}
                     id="userConfirmPasswordForm"
                     type="password" 
                     name="confirmPassword" 
@@ -84,6 +135,7 @@ const Register = () => {
                 <label htmlFor="userRoleForm">Role</label>
                 <input
                     onChange={getUserInfo}
+                    value={user.role}
                     id="userRoleForm"
                     name="role"
                     placeholder="Enter role (admin/user)" 

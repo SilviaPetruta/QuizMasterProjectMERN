@@ -3,14 +3,12 @@ const mongoose = require('mongoose');
 const user = new mongoose.Schema({
     name: {
         type: String,
-        required : true,
-        unique: true,
-        min : 6,
-        max : 15
+        required : true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -21,13 +19,12 @@ const user = new mongoose.Schema({
         enum: ['user', 'admin'],
         required: true
     },
-    // quiz : [
-    //     {
-    //         type : mongoose.Schema.Types.ObjectId, 
-    //         ref: 'Quiz',
-    //         default: []
-    //     }
-    // ],
+    quiz : [
+        {
+            type : mongoose.Schema.Types.ObjectId, 
+            ref: 'Quiz'
+        }
+    ],
 });
 
 module.exports = mongoose.model('user', user);
