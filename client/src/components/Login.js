@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import AuthService from '../middlewares/AuthService';
 
 
-const Login = () => {
+const Login = (props) => {
 
     const [user, setUser] = useState({
         email: "",
@@ -23,6 +23,7 @@ const Login = () => {
     },[]);
 
     const getUserInfo = (event) => {
+        console.log(event.target.value);
         setUser({
             ...user,
             [event.target.name]: event.target.value
@@ -31,11 +32,8 @@ const Login = () => {
 
     const resetForm = ()=>{
         setUser({
-            name : "",
             email: "",
-            password : "",
-            confirmPassword: "",
-            role : ""
+            password : ""
         });
     }
 
@@ -48,16 +46,16 @@ const Login = () => {
             userPasswordForm: user.password
         });
 
-        AuthService.register(body).then(async(data) => {
+        AuthService.login(body).then(async(data) => {
             const { message } = data;
             setMessage(message);
             resetForm();
 
-            // if(!message.msgError){
-            //     timerID = setTimeout(()=>{
-            //         props.history.push('/home');
-            //     },2000);
-            // }
+            if(!message.msgError){
+                timerID = setTimeout(()=>{
+                    props.history.push(`/quizPage`);
+                },500);
+            }
         });
     };
 
@@ -65,17 +63,20 @@ const Login = () => {
         <div>
             <form className='login' onSubmit={sendData}>
                 <h1>LOGIN</h1>
-                {/* <h2>{{message}}</h2> */}
+                <h2>{message.msgBody}</h2>
                 <label htmlFor="userEmailForm">Email</label>
                 <input 
+                    onChange={getUserInfo}
                     id="userEmailForm"
                     type="email" 
-                    name="userEmailForm" required />
+                    name="email" required />
                 <label htmlFor="userPasswordForm">Password</label>
                 <input 
+                    onChange={getUserInfo}
                     id="userPasswordForm"
                     type="password" 
-                    name="userPasswordForm" required />
+                    name="password"
+                    required />
                 <button 
                     className="btn btn-lg btn-primary btn-block" 
                     type="submit">Login</button>

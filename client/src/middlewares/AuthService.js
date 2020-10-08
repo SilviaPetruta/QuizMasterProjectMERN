@@ -8,12 +8,8 @@ export default {
             headers : {
                 'Content-Type' : 'application/json'
             }
-        }).then(res => {
-            if(res.status !== 401)
-                return res.json().then(data => data);
-            else
-                return { isAuthenticated: false, user: { email: "", password: "" } };
-        })
+        }).then(res => res.json())
+          .then(data => data);
     },
     register : (body) => {
         console.log(body);
@@ -29,12 +25,12 @@ export default {
     },
 
     isAuthenticated: () => {
-        return fetch('/authenticated')
+        return fetch('/user/authenticated')
                 .then(res=>{
                     if(res.status !== 401)
                         return res.json().then(data => data);
                     else
-                        return { isAuthenticated: false, user: {email: "", password: ""}};
+                        return { isAuthenticated: false, user: {email: "", role: "", name: ""}};
                 });
     }
 }

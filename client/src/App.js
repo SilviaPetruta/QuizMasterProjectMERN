@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // import axios from 'axios';
 import './scss/App.scss';
 import Home from './components/Home';
@@ -13,15 +13,28 @@ import UnPrivateRoute from './hocs/UnPrivateRoute';
 class App extends Component {
   render() {
     return(
-      <Router>
-        <div>
-          <Route exact path="/" component={Home}/>
-          <UnPrivateRoute path="/login" component={Login}/>
-          <UnPrivateRoute path="/register" component={Register}/>
-          <UnPrivateRoute path="/404" component={ErrorPage}/>
-        </div>
-        
-      </Router>
+      <BrowserRouter>
+        {/* <Navbar/> */}
+        <Switch >
+          <Route 
+            exact path="/"  
+            component={Home}
+            // render={ () =><Home />}
+               />
+          <Route 
+            exact path="/Register" 
+            component={Register}
+            // render={ () =><Register 
+            //   /> } 
+              />
+          <Route 
+            exact path="/Login" 
+            component={Login}
+            // render={ () => <Login 
+            //   />}
+              />
+        </Switch>
+      </BrowserRouter>
     )
   }
 }

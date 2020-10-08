@@ -8,17 +8,22 @@ require('dotenv').config();
 router.post('/', async(req, res) => {
 
     User.findOne({ email: req.body.userEmailForm }, async(err,user) => {
+        console.log('Backend login', req.body.userEmailForm);
         if(err) {
             console.log(`An error has ocurred: ${err}`);
 
             res.status(500).json({message : {msgBody : "An error has occured", msgError: true}});
         } else if (user) {
             const passwordsMatch = await bcryptjs.compare(req.body.userPasswordForm, user.password);
+            console.log(passwordsMatch);
+            console.log('IDDDDDD: ',user._id);
 
             if(passwordsMatch) {
                 const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRES_IN
                 });
+
+                console.log(token);
 
                 const cookieOptions = {
                     expires: new Date(
@@ -27,9 +32,14 @@ router.post('/', async(req, res) => {
                     httpOnly: true
                 };
 
+                console.log(cookieOptions);
+
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).json({isAuthenticated: true,user: {email, password}});
+                // res.status(200).json({isAuthenticated: true, user: {name, role}});
+                res.status(200).json({message : {msgBody : "Account successfully created", msgError: false}});
+
                 return;
+                
             } else {
                 res.status(400).json({message : {msgBody : `The password or email is wrong. Please try again.`, msgError: true}});
                 return;

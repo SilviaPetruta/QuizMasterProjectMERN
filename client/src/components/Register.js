@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Context } from 'react';
 import axios from 'axios';
 import AuthService from '../middlewares/AuthService';
 
@@ -25,7 +25,6 @@ const Register = (props) => {
     },[]);
 
     const getUserInfo = (event) => {
-        console.log("Above event.target.value")
         console.log(event.target.name + ' ' + event.target.value);
 
         setUser({
@@ -36,7 +35,7 @@ const Register = (props) => {
 
     const sendData = async (event) => {
         event.preventDefault();
-        console.log("Form submitted");
+        console.log("Form to be submitted");
 
         const body = JSON.stringify({
             userNameForm: user.name,
@@ -57,6 +56,7 @@ const Register = (props) => {
 
             if(!message.msgError){
                 timerID = setTimeout(()=>{
+                    // this.context.history.push('/login')
                     props.history.push('/login');
                 },2000);
             }

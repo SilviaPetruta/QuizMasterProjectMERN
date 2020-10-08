@@ -11,6 +11,8 @@ const errRouter = require('./routes/404');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const homeRouter = require('./routes/home');
+const userRouter = require('./routes/user');
+const quizPageRouter = require('./routes/quizPage');
 
 const app = express();
 app.use(express.urlencoded({extended: false}));
@@ -32,6 +34,8 @@ app.get('/', (req, res) => {
 app.use('/', homeRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/quizPage', quizPageRouter);
+app.use('/user', userRouter);
 app.use('/*', errRouter);
 
 app.listen(process.env.PORT, () => {
