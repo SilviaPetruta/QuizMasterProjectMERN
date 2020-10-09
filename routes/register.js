@@ -5,8 +5,8 @@ const bcryptjs = require('bcryptjs');
 
 router.post('/', async(req, res) => {
 
-    console.log('Inside the register.');
-    console.log(req.body);
+    // console.log('Inside the register.');
+    // console.log(req.body);
 
     User.findOne({ email: req.body.userEmailForm }, async(err, user) => {
         if(err) {

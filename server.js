@@ -13,6 +13,7 @@ const registerRouter = require('./routes/register');
 const homeRouter = require('./routes/home');
 const userRouter = require('./routes/user');
 const quizPageRouter = require('./routes/quizPage');
+const quizQuestions = require('./routes/quizQuestions');
 
 const app = express();
 app.use(express.urlencoded({extended: false}));
@@ -35,6 +36,7 @@ app.use('/', homeRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/quizPage', quizPageRouter);
+app.use('/quizQuestions', quizQuestions);
 app.use('/user', userRouter);
 app.use('/*', errRouter);
 

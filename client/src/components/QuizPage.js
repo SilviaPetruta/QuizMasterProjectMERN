@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-// import AuthService from '../middlewares/AuthService';
 import axios from 'axios';
+import AuthService from '../middlewares/AuthService';
 
 
 const QuizPage = (props) => {
@@ -10,9 +10,7 @@ const QuizPage = (props) => {
         difficulty: ""
     });
 
-    const [selectDifficulty, setSelectDifficulty] = useState({
-        difficulty: ""
-    });
+    const [quizQuestions, setQuizQuestions] = useState();
 
     const [message, setMessage] = useState({
         msgBody: "",
@@ -21,9 +19,7 @@ const QuizPage = (props) => {
 
     let timerID = useRef(null);
 
-    useEffect(()=>{
-        getAPI();
-
+    useEffect(()=>{ 
         return ()=>{
             clearTimeout(timerID);
         }
@@ -36,73 +32,50 @@ const QuizPage = (props) => {
             ...selectCategory,
             [event.target.name]: event.target.value
         });
-
-        // setSelectDifficulty({
-        //     ...selectDifficulty,
-        //     [event.target.name]: event.target.value
-        // });
     };
 
     const resetForm = ()=>{
         setSelectCategory({
-            category: ""
+            category: "",
+            difficulty: ""
         });
-
-        // setSelectDifficulty({
-        //     difficulty: ""
-        // });
     }
 
-    const getAPI = async () => {
+    const getAPI = async (event) => {
+        event.preventDefault();
 
-        // let cat = selectCategory.category;
-        // let dif = selectDifficulty.difficulty;
-
-        // console.log(cat, dif);
+        console.log('Category: ', selectCategory);
         const res = await axios.get(`https://opentdb.com/api.php?amount=10&category=${selectCategory.category}&difficulty=${selectCategory.difficulty}&type=multiple`);
-        console.log(res.data.results);
-        console.log(res.data.results);
+
+        const body = JSON.stringify({
+            quizQuestions: res.data.results
+        });
+
+        AuthService.quizQuestions(body).then(async(data) => {
+            console.log(data);
+
+             const { message } = data;
+            setMessage(message);
+            resetForm();
+
+            if(!message.msgError){
+                timerID = setTimeout(()=>{
+                    props.history.push('/quizQuestions');
+                },2000);
+            }
+        });
+
         
 
-
-      }
-
-    // const sendData = async (event) => {
-    //     event.preventDefault();
-    //     console.log("Form to be submitted");
-
-    //     const body = JSON.stringify({
-    //         userNameForm: user.name,
-    //         userEmailForm: user.email,
-    //         userPasswordForm: user.password,
-    //         userConfirmPasswordForm: user.confirmPassword,
-    //         userRoleForm: user.role
-    //     });
-
-    //     // const res = await axios.post('/register', body, config);
-
-    //     AuthService.register(body).then(async(data) => {
-    //         console.log(data);
-
-    //         const { message } = data;
-    //         setMessage(message);
-    //         resetForm();
-
-    //         if(!message.msgError){
-    //             timerID = setTimeout(()=>{
-    //                 // this.context.history.push('/login')
-    //                 props.history.push('/login');
-    //             },2000);
-    //         }
-    //     });
-    // };
-
-    console.log('Category: ', selectCategory);
-    // console.log('Difficulty: ', selectDifficulty.difficulty);
+        console.log(res.data.results);
+    }
 
     return (
         <div>
-            <form className='quizGenerator' >
+            <form 
+                className='quizGenerator'
+                onSubmit={getAPI}
+                 >
                 {/* <h2>{message.msgBody}</h2> */}
                 <select 
                     onChange={getCategoryInfo}
@@ -151,7 +124,8 @@ const QuizPage = (props) => {
                 </select>
                 <button 
                     className="btn btn-lg btn-primary btn-block" 
-                    type="submit">Generate Quiz</button>
+                    type="submit" 
+                    >Generate Quiz</button>
             </form>
         </div>
     )

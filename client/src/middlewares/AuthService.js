@@ -23,7 +23,18 @@ export default {
         }).then(res => res.json())
           .then(data => data);
     },
+    quizQuestions : (body) => {
+        console.log(body);
 
+        return fetch('/quizQuestions', {
+            method: "post",
+            body: body,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+          .then(data => data);
+    },
     isAuthenticated: () => {
         return fetch('/user/authenticated')
                 .then(res=>{
