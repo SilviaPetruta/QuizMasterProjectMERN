@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import ErrorPage from './components/404';
+import QuizPage from './components/QuizPage';
 
 import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
@@ -30,6 +31,13 @@ class App extends Component {
           <Route 
             exact path="/Login" 
             component={Login}
+            // render={ () => <Login 
+            //   />}
+              />
+
+          <Route 
+            exact path="/quizPage" 
+            component={QuizPage}
             // render={ () => <Login 
             //   />}
               />
