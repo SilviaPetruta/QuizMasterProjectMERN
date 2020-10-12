@@ -8,6 +8,9 @@ router.get('/', auth.isLoggedIn, async(req, res) => {
     if (req.user) {
         console.log('userProfile', req.user);
         let user = await User.findById(req.user._id);
+
+        console.log(user);
+
         let userObj = user.toObject();
         
         res.status(200).json({userObj});

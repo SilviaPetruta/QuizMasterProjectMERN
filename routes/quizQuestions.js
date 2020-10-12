@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middlewares/auth');
 const User = require('../models/user');
 
-router.get('/', auth.isLoggedIn, async(req, res) => {
+router.post('/', auth.isLoggedIn, async(req, res) => {
 
     if (req.user) {
         console.log('userProfile', req.user);
