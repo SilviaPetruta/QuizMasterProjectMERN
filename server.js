@@ -14,6 +14,8 @@ const homeRouter = require('./routes/home');
 const userRouter = require('./routes/user');
 const quizPageRouter = require('./routes/quizPage');
 const quizQuestions = require('./routes/quizQuestions');
+const logoutRouter = require('./routes/logout');
+const isAuthenticatedRouter = require('./routes/authenticated');
 
 const app = express();
 app.use(express.urlencoded({extended: false}));
@@ -35,6 +37,8 @@ app.get('/', (req, res) => {
 app.use('/', homeRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
+app.use('./authenticated', isAuthenticatedRouter);
 app.use('/quizPage', quizPageRouter);
 app.use('/quizQuestions', quizQuestions);
 app.use('/user', userRouter);

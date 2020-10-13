@@ -23,6 +23,11 @@ export default {
         }).then(res => res.json())
           .then(data => data);
     },
+    logout : ()=>{
+        return fetch('/logout')
+                .then(res => res.json())
+                .then(data => data);
+    },
     quizQuestions : (body) => {
         console.log(body);
 
@@ -36,7 +41,7 @@ export default {
           .then(data => data);
     },
     isAuthenticated: () => {
-        return fetch('/user/authenticated')
+        return fetch('/authenticated')
                 .then(res=>{
                     if(res.status !== 401)
                         return res.json().then(data => data);

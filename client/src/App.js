@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ErrorPage from './components/404';
 import QuizPage from './components/QuizPage';
+import Navbar from './components/Navbar';
 
 import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
@@ -15,7 +16,7 @@ class App extends Component {
   render() {
     return(
       <BrowserRouter>
-        {/* <Navbar/> */}
+        <Navbar/>
         <Switch >
           <Route 
             exact path="/"  

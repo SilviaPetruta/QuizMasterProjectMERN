@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 // import AuthService from '../middlewares/AuthService';
-import MyStopwatch from './Timer';
 
 
 const QuizPage = (props) => {
@@ -15,10 +14,7 @@ const QuizPage = (props) => {
 
     const [showQuizQuestions, setShowQuizQuestions] = useState(false);
 
-    const [score, setScore] = useState({
-        points: 0,
-        time: ''
-    });
+    const [points, setPoints] = useState(0);
 
     const [showFinalScore, setShowFinalScore] = useState(false);
 
@@ -43,6 +39,7 @@ const QuizPage = (props) => {
     };
     
     const handlePause = () => {
+
         clearInterval(increment.current);
         setIsPaused(false);        
     };
@@ -101,41 +98,70 @@ const QuizPage = (props) => {
         setQuizQuestions(questions);
         setShowQuizQuestions(true);
 
-        // handleStart();
+        handleStart();
     }
     
-    let finalAnswers = [];
-    const checkAnswer = (index, ans) => {
+    const [finalAnswers, setFinalAnswers] = useState();
+
+    const saveAnswers = (index, ans) => {
         console.log("Checked a response for question number ", index);
 
-        finalAnswers.push(ans);
+        let answers = {...finalAnswers};
+        answers[index] = ans;
+
+        setFinalAnswers(answers);
     }
 
-    const finalScore = (event) => {
+    const finalScore = async(event) => {
         event.preventDefault();
         console.log('Final answers array: ',finalAnswers);
         let finalScore = 0;
-        finalAnswers.map((item, index) => {
-            if(item === quizQuestions[index].correct_answer) {
+
+        for(let index in finalAnswers) {
+            let answer = finalAnswers[index];
+          
+            if(answer === quizQuestions[index].correct_answer) {
                 finalScore++;
             }
-        });     
+        }    
         
-        setScore({
-            ...score,
-            points: finalScore,
-            time: increment.current
+        setPoints(finalScore);
+        handlePause();
+        setShowFinalScore(true);
+
+
+        const body = JSON.stringify({
+            score: finalScore,
+            time: timer
         });
 
+        console.log(body);
 
-        // handlePause();
+        const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }
 
-        // setScore({
-        //     ...score,
-        //     time: increment.current
+        const res = await axios.post('/quizPage', body, config);
+
+        console.log(res.data);
+
+        // AuthService.quizQuestions(body).then(async(data) => {
+        //     console.log(data);
+
+        //     const { message } = data;
+        //     setMessage(message);
+        //     resetForm();
+
+        //     if(!message.msgError){
+        //         timerID = setTimeout(()=>{
+        //             props.history.push('/login');
+        //         },2000);
+        //     }
         // });
-        setShowFinalScore(true);
-        console.log(score.points);
+
+        console.log(body);
     }
 
     let questions = null;
@@ -151,7 +177,7 @@ const QuizPage = (props) => {
                             id={a} 
                             value={a} 
                             type="radio" 
-                            onChange={(event) => checkAnswer(index, event.target.value)} />
+                            onChange={(event) => saveAnswers(index, event.target.value)} />
                     </li>
                 )
             });
@@ -173,7 +199,7 @@ const QuizPage = (props) => {
 
     return (
         <div>
-            {showQuizQuestions ? (showFinalScore ? <p>{score.points}</p> :    
+            {showQuizQuestions ? (showFinalScore ? <p>{points} : {timer}</p> :    
                 <div>
                     <form onSubmit={finalScore}>
                         <div className="app">

@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import AuthService from '../middlewares/AuthService';
+import {AuthContext} from '../Context/AuthContext.js';
 
 
 const Login = (props) => {
@@ -14,7 +15,11 @@ const Login = (props) => {
         msgError: ""
     });
 
+    const authContext = useContext(AuthContext);
+
     let timerID = useRef(null);
+
+    
 
     useEffect(()=>{
         return ()=>{
@@ -47,15 +52,20 @@ const Login = (props) => {
         });
 
         AuthService.login(body).then(async(data) => {
-            const { message } = data;
+            const { isAuthenticated, message, user } = data;
             setMessage(message);
             resetForm();
 
-            if(!message.msgError){
-                timerID = setTimeout(()=>{
-                    props.history.push(`/quizPage`);
-                },500);
-            }
+            if(isAuthenticated) {
+                authContext.setUser(user);
+                authContext.setIsAuthenticate(isAuthenticated);
+
+                if(!message.msgError){
+                    timerID = setTimeout(()=>{
+                        props.history.push(`/quizPage`);
+                    },500);
+                }
+            }            
         });
     };
 
