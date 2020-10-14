@@ -1,8 +1,8 @@
-const {Schema, model} = require('mongoose');
+const mongoose = require('mongoose');
 
-const QuizSchema = new Schema ({
+const quiz = new mongoose.Schema ({
     score: { type: Number },
     time: { type: String }
 });
 
-module.exports = model('Quiz', QuizSchema);
+module.exports = mongoose.model('Quiz', quiz);

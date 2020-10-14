@@ -18,7 +18,7 @@ router.post('/', async(req, res) => {
         } else if(req.body.userPasswordForm !== req.body.userConfirmPasswordForm) {
             res.status(400).json({message : {msgBody : "The passwords have to be the same. Please try again.", msgError: true}});
         } else {
-            console.log(`Passwords match.`);
+            // console.log(`Passwords match.`);
 
             const hashedPassword = await bcryptjs.hash(req.body.userPasswordForm, 8);
 
@@ -29,11 +29,11 @@ router.post('/', async(req, res) => {
                 role: req.body.userRoleForm
             });
 
-            console.log(newUser);
+            // console.log(newUser);
 
             newUser.save(err => {
                 if (err) {
-                    console.log(`An error has ocurred: ${err}`);
+                    // console.log(`An error has ocurred: ${err}`);
 
                     res.status(500).json({message : {msgBody : "The account could not be created. Please try again!", msgError: true}});
                 } else {

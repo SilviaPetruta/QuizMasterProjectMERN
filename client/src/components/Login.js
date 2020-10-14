@@ -43,7 +43,7 @@ const Login = (props) => {
 
     const sendData = async (event) => {
         event.preventDefault();
-        console.log("Form to be submitted");
+        // console.log("Form to be submitted");
 
         const body = JSON.stringify({
             userEmailForm: user.email,

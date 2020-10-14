@@ -62,6 +62,11 @@ const Navbar = (props) =>{
                         Quiz
                     </li>
                 </Link> 
+                <Link to="/top10">
+                    <li className="nav-item nav-link">
+                        Top 10 Scores
+                    </li>
+                </Link> 
                 
                 {/* {
                     user.role === "admin" ? 
@@ -81,7 +86,6 @@ const Navbar = (props) =>{
     return(
         <div className='navbar-container'>
             <div className='navbar-wrapper'>
-            <img src='logo2.svg' className='logo_navbar'></img>
                 <div>
                     <ul>
                         { !isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}

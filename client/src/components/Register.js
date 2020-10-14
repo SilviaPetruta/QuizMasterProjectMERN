@@ -56,33 +56,10 @@ const Register = (props) => {
 
             if(!message.msgError){
                 timerID = setTimeout(()=>{
-                    // this.context.history.push('/login')
                     props.history.push('/login');
                 },2000);
             }
-        });
-
-
-        // try {
-        //     const res = await axios.post('/register', body, config);
-        //     console.log(res);
-        //     const { message } = res.data;
-        //     setMessage(message);
-        //     resetForm();
-
-        //     if(!message.msgError){
-        //         timerID = setTimeout(()=>{
-        //             props.history.push('/login');
-        //         },2000)
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        //     const { message } = error;
-        //     setMessage(message);
-        // }
-        
-        
-        
+        });  
     };
 
     const resetForm = ()=>{

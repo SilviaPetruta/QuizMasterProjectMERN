@@ -7,10 +7,10 @@ const Quiz = require('../models/quiz');
 router.get('/', auth.isLoggedIn, async(req, res) => {
 
     if (req.user) {
-        console.log('userProfile', req.user);
+        // console.log('userProfile', req.user);
         let user = await User.findById(req.user._id);
 
-        console.log(user);
+        // console.log(user);
 
         let userObj = user.toObject();
         
@@ -23,7 +23,7 @@ router.get('/', auth.isLoggedIn, async(req, res) => {
 });
 
 router.post('/', auth.isLoggedIn, async(req, res) => {
-    console.log("Post method is working", req.body);
+    // console.log("Post method is working", req.body);
     let { score, time } = req.body
     let id = req.user._id;
 

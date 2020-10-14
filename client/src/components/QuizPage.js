@@ -19,6 +19,8 @@ const QuizPage = (props) => {
 
     const [showFinalScore, setShowFinalScore] = useState(false);
 
+    const [finalAnswers, setFinalAnswers] = useState();
+
     const [message, setMessage] = useState({
         msgBody: "",
         msgError: ""
@@ -49,7 +51,7 @@ const QuizPage = (props) => {
         const getSeconds = `0${(timer % 60)}`.slice(-2);
         const minutes = `${Math.floor(timer / 60)}`;
         const getMinutes = `0${minutes % 60}`.slice(-2);
-        const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+        // const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
     
         return `${getMinutes} : ${getSeconds}`;
     };
@@ -63,7 +65,7 @@ const QuizPage = (props) => {
     },[]);
 
     const getCategoryInfo = (event) => {
-        console.log(event.target.name + ' ' + event.target.value);
+        // console.log(event.target.name + ' ' + event.target.value);
 
         setSelectCategory({
             ...selectCategory,
@@ -81,7 +83,7 @@ const QuizPage = (props) => {
     const getAPI = async (event) => {
         event.preventDefault();
 
-        console.log('Category: ', selectCategory);
+        // console.log('Category: ', selectCategory);
 
         const res = await axios.get(`https://opentdb.com/api.php?amount=10&category=${selectCategory.category}&difficulty=${selectCategory.difficulty}&type=multiple`);
 
@@ -101,8 +103,6 @@ const QuizPage = (props) => {
 
         handleStart();
     }
-    
-    const [finalAnswers, setFinalAnswers] = useState();
 
     const saveAnswers = (index, ans) => {
         console.log("Checked a response for question number ", index);
@@ -136,7 +136,7 @@ const QuizPage = (props) => {
             time: timer
         });
 
-        console.log(body);
+        // console.log(body);
 
         const config = {
             headers: {
@@ -147,24 +147,6 @@ const QuizPage = (props) => {
         const res = await axios.post('/quizPage', body, config);
 
         console.log(res.data);
-
-        // timerID = setTimeout(()=>{
-        //     props.history.push('/quizQuestions');
-        // },500);
-
-        // AuthService.quizQuestions(body).then(async(data) => {
-        //     console.log(data);
-
-        //     const { message } = data;
-        //     setMessage(message);
-        //     resetForm();
-
-        //     if(!message.msgError){
-        //         timerID = setTimeout(()=>{
-        //             props.history.push('/login');
-        //         },2000);
-        //     }
-        // });
 
         console.log(body);
     }
@@ -217,8 +199,7 @@ const QuizPage = (props) => {
                         <ul>
                             {questions}
                         </ul>
-                        <button 
-                            // onClick={handlePause}
+                        <button
                             type="submit">Finish Quiz</button>
                     </form> 
                 </div>  )                  
@@ -275,7 +256,6 @@ const QuizPage = (props) => {
                 <button 
                     className="btn btn-lg btn-primary btn-block" 
                     type="submit"
-                    // onClick={handleStart}
                     >Generate Quiz</button>
             </form>}
              

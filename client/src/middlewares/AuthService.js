@@ -1,7 +1,7 @@
 
 export default {
     login: (body) =>{
-        console.log(body);
+        // console.log(body);
         return fetch('/login',{
             method : "post",
             body : body,
@@ -12,7 +12,7 @@ export default {
           .then(data => data);
     },
     register : (body) => {
-        console.log(body);
+        // console.log(body);
 
         return fetch('/register', {
             method: "post",
@@ -29,7 +29,7 @@ export default {
                 .then(data => data);
     },
     quizQuestions : (body) => {
-        console.log(body);
+        // console.log(body);
 
         return fetch('/quizQuestions', {
             method: "post",
@@ -43,7 +43,7 @@ export default {
     isAuthenticated: () => {
         return fetch('/authenticated')
                 .then(res => {
-                    console.log("AuthService /authenticated response: ", res);
+                    // console.log("AuthService /authenticated response: ", res);
 
                     if(res.status !== 401)
                         return res.json().then(data => data);
