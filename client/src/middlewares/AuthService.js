@@ -42,7 +42,9 @@ export default {
     },
     isAuthenticated: () => {
         return fetch('/authenticated')
-                .then(res=>{
+                .then(res => {
+                    console.log("AuthService /authenticated response: ", res);
+
                     if(res.status !== 401)
                         return res.json().then(data => data);
                     else

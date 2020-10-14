@@ -7,19 +7,19 @@ require('dotenv').config();
 
 router.post('/', async(req, res) => {
 
-    User.findOne({ email: req.body.userEmailForm }, async(err,user) => {
+    User.findOne({ email: req.body.userEmailForm }, async(err,existingUser) => {
         console.log('Backend login', req.body.userEmailForm);
         if(err) {
             console.log(`An error has ocurred: ${err}`);
 
             res.status(500).json({message : {msgBody : "An error has occured", msgError: true}});
-        } else if (user) {
-            const passwordsMatch = await bcryptjs.compare(req.body.userPasswordForm, user.password);
+        } else if (existingUser) {
+            const passwordsMatch = await bcryptjs.compare(req.body.userPasswordForm, existingUser.password);
             console.log(passwordsMatch);
-            console.log('IDDDDDD: ',user._id);
+            console.log('IDDDDDD: ',existingUser._id);
 
             if(passwordsMatch) {
-                const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+                const token = jwt.sign({id: existingUser._id}, process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRES_IN
                 });
 
@@ -34,9 +34,15 @@ router.post('/', async(req, res) => {
 
                 console.log(cookieOptions);
 
+                const user = {
+                    name: existingUser.name,
+                    role: existingUser.role,
+                    email: existingUser.email
+                }
+
                 res.cookie('jwt', token, cookieOptions);
-                // res.status(200).json({isAuthenticated: true, user: {name, role}});
-                res.status(200).json({message : {msgBody : "Account successfully created", msgError: false}});
+                res.status(200).json({isAuthenticated: true, user, message : {msgBody : "User logged in successfully.", msgError: false}});
+                // res.status(200).json({message : {msgBody : "User logged in successfully.", msgError: false}});
 
                 return;
                 

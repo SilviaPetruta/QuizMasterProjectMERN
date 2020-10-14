@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 // import AuthService from '../middlewares/AuthService';
 
 
@@ -147,6 +148,10 @@ const QuizPage = (props) => {
 
         console.log(res.data);
 
+        // timerID = setTimeout(()=>{
+        //     props.history.push('/quizQuestions');
+        // },500);
+
         // AuthService.quizQuestions(body).then(async(data) => {
         //     console.log(data);
 
@@ -224,10 +229,10 @@ const QuizPage = (props) => {
                 {/* <h2>{message.msgBody}</h2> */}
                 <select 
                     onChange={getCategoryInfo}
-                    name="category" >
+                    name="category" 
+                    defaultValue={''}>
                     <option 
-                        value="" 
-                        selected
+                        value=""
                         disabled
                         hidden
                          >Select Category:</option>
@@ -250,9 +255,9 @@ const QuizPage = (props) => {
 
                 <select 
                     name="difficulty"
+                    defaultValue={''}
                     onChange={getCategoryInfo}>
                     <option 
-                        selected
                         value=""  
                         disabled
                         hidden 
@@ -279,4 +284,4 @@ const QuizPage = (props) => {
     )
 }
 
-export default QuizPage;
+export default withRouter(QuizPage);

@@ -38,7 +38,7 @@ app.use('/', homeRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
-app.use('./authenticated', isAuthenticatedRouter);
+app.use('/authenticated', isAuthenticatedRouter);
 app.use('/quizPage', quizPageRouter);
 app.use('/quizQuestions', quizQuestions);
 app.use('/user', userRouter);

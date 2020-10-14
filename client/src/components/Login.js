@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import AuthService from '../middlewares/AuthService';
 import {AuthContext} from '../Context/AuthContext.js';
 
@@ -18,8 +19,6 @@ const Login = (props) => {
     const authContext = useContext(AuthContext);
 
     let timerID = useRef(null);
-
-    
 
     useEffect(()=>{
         return ()=>{
@@ -44,7 +43,7 @@ const Login = (props) => {
 
     const sendData = async (event) => {
         event.preventDefault();
-        console.log("Form submitted");
+        console.log("Form to be submitted");
 
         const body = JSON.stringify({
             userEmailForm: user.email,
@@ -58,7 +57,7 @@ const Login = (props) => {
 
             if(isAuthenticated) {
                 authContext.setUser(user);
-                authContext.setIsAuthenticate(isAuthenticated);
+                authContext.setIsAuthenticated(isAuthenticated);
 
                 if(!message.msgError){
                     timerID = setTimeout(()=>{
@@ -95,4 +94,4 @@ const Login = (props) => {
     )
 }
 
-export default Login;
+export default withRouter(Login);

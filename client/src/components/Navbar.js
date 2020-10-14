@@ -1,16 +1,28 @@
-import React, {useContext} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useContext, useRef, useEffect} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import AuthService from '../middlewares/AuthService';
 import { AuthContext } from '../Context/AuthContext';
 
-const Navbar = props =>{
+const Navbar = (props) =>{
     const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+
+    let timerID = useRef(null);
+
+    useEffect(()=>{
+        return ()=>{
+            clearTimeout(timerID);
+        }
+    },[]);
     
     const onClickLogoutHandler = ()=>{
-        AuthService.logout().then(data=>{
+        AuthService.logout().then(async(data)=>{
             if(data.success){
                 setUser(data.user);
                 setIsAuthenticated(false);
+
+                timerID = setTimeout(()=>{
+                    props.history.push(`/login`);
+                },500);
             }
         });
     }
@@ -80,4 +92,4 @@ const Navbar = props =>{
     )
 }
 
-export default Navbar;
+export default withRouter(Navbar);
