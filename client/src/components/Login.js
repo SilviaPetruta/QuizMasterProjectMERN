@@ -69,25 +69,29 @@ const Login = (props) => {
     };
 
     return (
-        <div>
+        <div className="loginDiv">
             <form className='login' onSubmit={sendData}>
-                <h1>LOGIN</h1>
+                <h1 className="login-header">LOGIN</h1>
                 <h2>{message.msgBody}</h2>
                 <label htmlFor="userEmailForm">Email</label>
                 <input 
+                    className="loginInput"
                     onChange={getUserInfo}
                     id="userEmailForm"
+                    placeholder="Enter your email"
                     type="email" 
                     name="email" required />
                 <label htmlFor="userPasswordForm">Password</label>
                 <input 
+                    className="loginInput"
                     onChange={getUserInfo}
                     id="userPasswordForm"
+                    placeholder="Enter your password"
                     type="password" 
                     name="password"
                     required />
                 <button 
-                    className="btn btn-lg btn-primary btn-block" 
+                    className="btn" 
                     type="submit">Login</button>
             </form>
         </div>

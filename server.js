@@ -16,6 +16,7 @@ const quizPageRouter = require('./routes/quizPage');
 const logoutRouter = require('./routes/logout');
 const isAuthenticatedRouter = require('./routes/authenticated');
 const top10Router = require('./routes/top10');
+const homeUserRouter = require('./routes/homeUser');
 
 const app = express();
 app.use(express.urlencoded({extended: false}));
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', homeRouter);
+app.use('/home', homeUserRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);

@@ -75,10 +75,11 @@ const Register = (props) => {
     return (
         <div className="registerDiv">
             <form className='register' onSubmit={sendData}>
-                <h1>SIGN UP</h1>
+                <h1 className="register-header">SIGN UP</h1>
                 <h2>{message.msgBody}</h2>
                 <label htmlFor="userNameForm">User Name</label>
                 <input 
+                    className="inputRegister"
                     onChange={getUserInfo}
                     value={user.name}
                     id="userNameForm"
@@ -87,6 +88,7 @@ const Register = (props) => {
                     required/>
                 <label htmlFor="userEmailForm value={userNameForm}">Email</label>
                 <input 
+                    className="inputRegister"
                     onChange={getUserInfo}
                     value={user.email}
                     id="userEmailForm"
@@ -95,6 +97,7 @@ const Register = (props) => {
                     required />
                 <label htmlFor="userPasswordForm">Password</label>
                 <input 
+                    className="inputRegister"
                     onChange={getUserInfo}
                     value={user.password}
                     id="userPasswordForm"
@@ -103,6 +106,7 @@ const Register = (props) => {
                     required/>
                 <label htmlFor="userConfirmPasswordForm">Confirm Password</label>
                 <input 
+                    className="inputRegister"
                     onChange={getUserInfo}
                     value={user.confirmPassword}
                     id="userConfirmPasswordForm"
@@ -111,6 +115,7 @@ const Register = (props) => {
                     required/>
                 <label htmlFor="userRoleForm">Role</label>
                 <input
+                    className="inputRegister"
                     onChange={getUserInfo}
                     value={user.role}
                     id="userRoleForm"
@@ -118,7 +123,7 @@ const Register = (props) => {
                     placeholder="Enter role (admin/user)" 
                     required/>
                 <button 
-                    className="btn btn-lg btn-primary btn-block" type="submit"
+                    className="btn" type="submit"
                     >Register</button>
             </form>
         </div>
