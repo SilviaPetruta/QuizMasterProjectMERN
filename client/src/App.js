@@ -8,6 +8,7 @@ import ErrorPage from './components/404';
 import QuizPage from './components/QuizPage';
 import Navbar from './components/Navbar';
 import Top10 from './components/Top10';
+import HomeUser from './components/HomeUser';
 
 import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
@@ -25,6 +26,7 @@ class App extends Component {
         <UnPrivateRoute path="/login" component={Login}/>
         <PrivateRoute path="/quizPage" roles={["user","admin"]} component={QuizPage}/>
         <PrivateRoute path="/top10" roles={["user","admin"]} component={Top10}/>
+        <PrivateRoute path="/home" roles={["user","admin"]} component={HomeUser}/>
         {/* <Route 
           exact path="*"  
           component={ErrorPage}
