@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useEffect} from 'react';
+import React, {useContext, useRef, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import AuthService from '../middlewares/AuthService';
 import { AuthContext } from '../Context/AuthContext';
@@ -8,6 +8,8 @@ import Image3 from '../images/image3.jpeg';
 
 const Navbar = (props) =>{
     const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+
+    const [isMenuInputChecked, setIsMenuInputChecked] = useState(false);
 
     let timerID = useRef(null);
 
@@ -33,7 +35,6 @@ const Navbar = (props) =>{
     const unauthenticatedNavBar = ()=>{
         return (
             <>
-               
                     <Link className='link-component' to="/">
                         <li className="nav-list-item">
                             HOME
@@ -91,15 +92,16 @@ const Navbar = (props) =>{
     }
 
     const handlerForClosingNavbar = (event) => {
-        if(event.target.className == 'nav-list-item' || event.target.className == 'link-component') {
-
-        }
+        setIsMenuInputChecked(!isMenuInputChecked);
     }
 
     return(
         
         <div className='navbar'>
-            <input type="checkbox" id="check" className="checkbox" hidden />     
+            <input type="checkbox" id="check" className="checkbox" hidden 
+            checked={isMenuInputChecked}
+            onChange={handlerForClosingNavbar}
+            />     
             <div className="navbar-menu-button">
                 <label htmlFor="check" className="menu">
                     <div className="menu-line menu-line-1"></div>

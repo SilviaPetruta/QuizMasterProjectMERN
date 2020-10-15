@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, Context } from 'react';
 import axios from 'axios';
 import AuthService from '../middlewares/AuthService';
+import Logo from '../images/logo-white.png';
 
 const Register = (props) => {
 
@@ -74,6 +75,11 @@ const Register = (props) => {
 
     return (
         <div className="registerDiv">
+            <div className="header__logo-box">
+                <a href="/">
+                    <img src={Logo} alt="Logo" className="header__logo__login" />
+                </a>
+            </div>
             <form className='register' onSubmit={sendData}>
                 <h1 className="register-header">SIGN UP</h1>
                 <h2>{message.msgBody}</h2>
@@ -82,6 +88,7 @@ const Register = (props) => {
                     className="inputRegister"
                     onChange={getUserInfo}
                     value={user.name}
+                    placeholder="Enter your name"
                     id="userNameForm"
                     name="name"
                     type="text" 
@@ -91,6 +98,7 @@ const Register = (props) => {
                     className="inputRegister"
                     onChange={getUserInfo}
                     value={user.email}
+                    placeholder="Enter your email"
                     id="userEmailForm"
                     type="email" 
                     name="email"
@@ -100,6 +108,7 @@ const Register = (props) => {
                     className="inputRegister"
                     onChange={getUserInfo}
                     value={user.password}
+                    placeholder="Enter your password"
                     id="userPasswordForm"
                     type="password" 
                     name="password" 
@@ -109,6 +118,7 @@ const Register = (props) => {
                     className="inputRegister"
                     onChange={getUserInfo}
                     value={user.confirmPassword}
+                    placeholder="Enter your confirm password"
                     id="userConfirmPasswordForm"
                     type="password" 
                     name="confirmPassword" 

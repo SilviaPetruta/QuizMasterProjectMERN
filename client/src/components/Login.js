@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import AuthService from '../middlewares/AuthService';
 import {AuthContext} from '../Context/AuthContext.js';
+import Logo from '../images/logo-white.png';
 
 
 const Login = (props) => {
@@ -69,32 +70,40 @@ const Login = (props) => {
     };
 
     return (
-        <div className="loginDiv">
-            <form className='login' onSubmit={sendData}>
-                <h1 className="login-header">LOGIN</h1>
-                <h2>{message.msgBody}</h2>
-                <label htmlFor="userEmailForm">Email</label>
-                <input 
-                    className="loginInput"
-                    onChange={getUserInfo}
-                    id="userEmailForm"
-                    placeholder="Enter your email"
-                    type="email" 
-                    name="email" required />
-                <label htmlFor="userPasswordForm">Password</label>
-                <input 
-                    className="loginInput"
-                    onChange={getUserInfo}
-                    id="userPasswordForm"
-                    placeholder="Enter your password"
-                    type="password" 
-                    name="password"
-                    required />
-                <button 
-                    className="btn" 
-                    type="submit">Login</button>
-            </form>
+        <div>
+            <div className="header__logo-box">
+                <a href="/">
+                    <img src={Logo} alt="Logo" className="header__logo__login" />
+                </a>
+            </div>
+            <div className="loginDiv">
+                <form className='login' onSubmit={sendData}>
+                    <h1 className="login-header">LOGIN</h1>
+                    <h2>{message.msgBody}</h2>
+                    <label htmlFor="userEmailForm">Email</label>
+                    <input 
+                        className="loginInput"
+                        onChange={getUserInfo}
+                        id="userEmailForm"
+                        placeholder="Enter your email"
+                        type="email" 
+                        name="email" required />
+                    <label htmlFor="userPasswordForm">Password</label>
+                    <input 
+                        className="loginInput"
+                        onChange={getUserInfo}
+                        id="userPasswordForm"
+                        placeholder="Enter your password"
+                        type="password" 
+                        name="password"
+                        required />
+                    <button 
+                        className="btn" 
+                        type="submit">Login</button>
+                </form>
+            </div>
         </div>
+        
     )
 }
 

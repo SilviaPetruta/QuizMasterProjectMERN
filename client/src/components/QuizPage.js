@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-// import AuthService from '../middlewares/AuthService';
+import Logo from '../images/logo-white.png';
 
 
 const QuizPage = (props) => {
@@ -11,7 +11,9 @@ const QuizPage = (props) => {
         difficulty: ""
     });
 
-    const [quizQuestions, setQuizQuestions] = useState();
+    const [quizQuestions, setQuizQuestions] = useState(
+        
+    );
 
     const [showQuizQuestions, setShowQuizQuestions] = useState(false);
 
@@ -157,24 +159,24 @@ const QuizPage = (props) => {
 
             const answers = q.shuffledAnswers.map((a, aIndex) => {
                 return (
-                    <li key={aIndex}>
-                        <label htmlFor={a}>{a}</label>
+                    <li key={aIndex} className="quizQuestionAnswer">
                         <input 
                             name={q.question}
                             id={a} 
                             value={a} 
                             type="radio" 
                             onChange={(event) => saveAnswers(index, event.target.value)} />
+                        <label htmlFor={a}>{a}</label>
                     </li>
                 )
             });
 
             return (
-                <li key={index}>
-                    {q.question}
+                <li key={index} className="quizQuestion">
+                    <h2>{index+1}. {q.question}</h2>
                     <div>
-                        <p>Select your answer:</p>
-                        <br />
+                        {/* <p>Select your answer:</p>
+                        <br /> */}
                         <ul>
                             {answers}                          
                         </ul>                        
@@ -186,80 +188,91 @@ const QuizPage = (props) => {
 
     return (
         <div>
-            {showQuizQuestions ? (showFinalScore ? <p>{points} : {timer}</p> :    
-                <div>
+            {showQuizQuestions ? (showFinalScore ? <div className="questionsQuizPageFinalScore">
+                <h1>You scored {points} points in {timer} seconds.</h1>
+                <br/>
+                <a className="btnHome btn--white" href="/quizPage">Play again</a>
+            </div> :    
+                <div className="questionsQuizPage">
                     <form onSubmit={finalScore}>
-                        <div className="app">
-                            <h3>React Stopwatch</h3>
-                            <div className='stopwatch-card'>
-                                <p>{formatTime()}</p>
-                            </div>
+                        <div className='stopwatch-card'>
+                            <h1>Time</h1>
+                            <p>{formatTime()}</p>
                         </div>
 
-                        <ul>
+                        <ul className="questionsUl">
                             {questions}
                         </ul>
+                        
                         <button
+                            className="btnQuiz"
                             type="submit">Finish Quiz</button>
                     </form> 
                 </div>  )                  
-             : <form 
-                className='quizGenerator'
-                onSubmit={getAPI}
-                 >
-                {/* <h2>{message.msgBody}</h2> */}
-                <select 
-                    onChange={getCategoryInfo}
-                    name="category" 
-                    defaultValue={''}>
-                    <option 
-                        value=""
-                        disabled
-                        hidden
-                         >Select Category:</option>
-                    <option
-                        name="category" 
-                        value="23">History</option>
-                    <option 
-                        name="category"
-                        value="10">Entertaiment: Books</option>
-                    <option
-                        name="category"
-                        value="11">Entertaiment: Film</option>
-                    <option 
-                        name="category" 
-                        value="27">Animals</option>
-                    <option
-                        name="category" 
-                        value="9">General Knowledge</option>
-                </select>
+             : <div className='quizGenerator'>
+                    <div className="header__logo-box">
+                        <img src={Logo} alt="Logo" className="header__logo" />
+                    </div>
+                 <form className="quizGeneratorForm" onSubmit={getAPI}>
+                    <h1>Please choose the category and difficulty to generate your quiz.</h1>
+                    <div className="select">
+                        <select 
+                            onChange={getCategoryInfo}
+                            name="category" 
+                            defaultValue={''}>
+                            <option 
+                                value=""
+                                disabled
+                                hidden
+                                >Select Category</option>
+                            <option
+                                name="category" 
+                                value="23">History</option>
+                            <option 
+                                name="category"
+                                value="10">Books</option>
+                            <option
+                                name="category"
+                                value="11">Films</option>
+                            <option 
+                                name="category" 
+                                value="27">Animals</option>
+                            <option
+                                name="category" 
+                                value="9">General Knowledge</option>
+                        </select>
+                        <div className="select_arrow"></div>
+                    </div>
 
-                <select 
-                    name="difficulty"
-                    defaultValue={''}
-                    onChange={getCategoryInfo}>
-                    <option 
-                        value=""  
-                        disabled
-                        hidden 
-                        >Select Difficulty:</option>
-                    <option
-                        name="difficulty" 
-                        value="easy">Easy</option>
-                    <option 
-                        name="difficulty" 
-                        value="medium">Medium</option>
-                    <option 
-                        name="difficulty" 
-                        value="hard">Hard</option>
-                </select>
-                <button 
-                    className="btn btn-lg btn-primary btn-block" 
-                    type="submit"
-                    >Generate Quiz</button>
-            </form>}
-             
-            
+                    <div className="select">
+                        <select 
+                            name="difficulty"
+                            defaultValue={''}
+                            onChange={getCategoryInfo}>
+                            <option 
+                                value=""  
+                                disabled
+                                hidden 
+                                >Select Difficulty</option>
+                            <option
+                                name="difficulty" 
+                                value="easy">Easy</option>
+                            <option 
+                                name="difficulty" 
+                                value="medium">Medium</option>
+                            <option 
+                                name="difficulty" 
+                                value="hard">Hard</option>
+                        </select>
+                        <div className="select_arrow"></div>
+                    </div>
+                    <button 
+                        className="btnQuiz" 
+                        type="submit"
+                        >Generate Quiz</button>
+                </form>
+             </div>
+            }
         </div>
     )
 }
