@@ -82,7 +82,7 @@ const Top10 = (props) => {
                         <p>User: {quiz.name}</p>
                         <div>
                             <p>Points: {quiz.score}</p>
-                            <p>Time: {quiz.time}</p>
+                            <p>Time: {quiz.time} seconds</p>
                         </div>
                     </li>
                 </div>

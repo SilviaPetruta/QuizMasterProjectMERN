@@ -211,7 +211,10 @@ const QuizPage = (props) => {
                 </div>  )                  
              : <div className='quizGenerator'>
                     <div className="header__logo-box">
-                        <img src={Logo} alt="Logo" className="header__logo" />
+                        <a href="/home">
+                            <img src={Logo} alt="Logo" className="header__logo" />
+                        </a>
+                        
                     </div>
                  <form className="quizGeneratorForm" onSubmit={getAPI}>
                     <h1>Please choose the category and difficulty to generate your quiz.</h1>
