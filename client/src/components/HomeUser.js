@@ -5,7 +5,7 @@ const HomeUser = () => {
     return (
         <div className="homePageUser">
             <div className="header__logo-box">
-                <img src={Logo} alt="Logo" className="header__logo" />
+                <a href="/home"><img src={Logo} alt="Logo" className="header__logo" /></a>
             </div>
 
             <div className="header__text-box">

@@ -27,7 +27,7 @@ const Navbar = (props) =>{
 
                 timerID = setTimeout(()=>{
                     props.history.push(`/login`);
-                },500);
+                }, 50);
             }
         });
     }
@@ -84,7 +84,7 @@ const Navbar = (props) =>{
                 }   */}
                 
                 <a type="button" className="logout-btn" onClick={onClickLogoutHandler}>
-                    LOGOUT
+                    Log out
                 </a>
                 
             </>
