@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './scss/App.scss';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -18,19 +18,22 @@ class App extends Component {
     return(
       <Router>
         <Navbar/>
-        <Route 
-          exact path="/"  
-          component={Home}
-        />
-        <UnPrivateRoute path="/register" component={Register}/>
-        <UnPrivateRoute path="/login" component={Login}/>
-        <PrivateRoute path="/quizPage" roles={["user","admin"]} component={QuizPage}/>
-        <PrivateRoute path="/top10" roles={["user","admin"]} component={Top10}/>
-        <PrivateRoute path="/home" roles={["user","admin"]} component={HomeUser}/>
-        {/* <Route 
-          exact path="*"  
-          component={ErrorPage}
-        /> */}
+        <Switch>
+          <Route 
+            exact path="/"  
+            component={Home}
+          />
+          <UnPrivateRoute path="/register" component={Register}/>
+          <UnPrivateRoute path="/login" component={Login}/>
+          <PrivateRoute path="/quizPage" roles={["user","admin"]} component={QuizPage}/>
+          <PrivateRoute path="/top10" roles={["user","admin"]} component={Top10}/>
+          <PrivateRoute path="/home" roles={["user","admin"]} component={HomeUser}/>
+          <Route 
+            // exact path=""  
+            component={ErrorPage}
+          /> 
+        </Switch>
+        
       </Router>
     )
   }

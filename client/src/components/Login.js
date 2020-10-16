@@ -62,8 +62,8 @@ const Login = (props) => {
 
                 if(!message.msgError){
                     timerID = setTimeout(()=>{
-                        props.history.push(`/quizPage`);
-                    },500);
+                        props.history.push(`/home`);
+                    }, 15);
                 }
             }            
         });

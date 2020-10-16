@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import Logo from '../images/logo-white.png';
 
 const Top10 = (props) => {
 
@@ -76,24 +77,33 @@ const Top10 = (props) => {
 
         usersScore = allQuizzes.map((quiz, index) => {
             return (
-                <li key={index}>
+                <div className="quiz">
+                    <li key={index} className="top10-score-list">
+                        <p>User: {quiz.name}</p>
                         <div>
-                            <p>User: {quiz.name}</p>
                             <p>Points: {quiz.score}</p>
                             <p>Time: {quiz.time}</p>
                         </div>
                     </li>
+                </div>
             );            
         });
     };    
 
     return (
-        <div>
-            <h1>Top 10 Scores</h1>
+        <div className="top10-container">
+            <h1 className="top10-header">Top 10 Scores</h1>
             {showUsersScore ? 
-            <ul>
-                {usersScore}
-            </ul>
+            <div className="top10-container-true">
+                <div className="header__logo-box">
+                    <a href="/home">
+                        <img src={Logo} alt="Logo" className="header__logo" />
+                    </a>
+                </div>
+                <ul className="top10-score" >
+                    {usersScore}
+                </ul>
+            </div>
             : 
             null}
         </div>
